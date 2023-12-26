@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="{% static 'image/youtube-logo-blue-10691mini.png' %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet"
+        />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/general.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/Hover.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/chips-contents.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/contents.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+
+    </head>
+    <body>
+        <header>
+        </header>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+        <footer>
+        </footer>
+    </body>
+</html>

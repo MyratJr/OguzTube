@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}OguzTube{% endblock %}
+{% block content %}
+    {% include 'header.html' with a1="0px" %}
+    {% if videos|length == 0 %}
+    <div style="text-align:center">
+        <img src="{% static 'image/7887410_3793096.jpg' %}" width="400">
+    </div>
+        <h2 style="text-align:center">Bu kategoriýada wideo tapylmady!!!</h2>
+    {% endif %}
+    <div class="video-contents">
+        {% for i in videos %}
+            <div class="video-card">
+                <a href="{% url 'video' i.property.id i.id %}" class="thumbnail-container">
+                    <img class="thumbnail" src="{{i.video_image.url}}">
+                    <div class="timestamp">{{i.duration}}</div>
+                </a>
+                <div class="video-details">
+                    <img class="channel-img" src="{{i.property.avatar.url}}">
+                    <div class="Video-desc">
+                        <p class="channel-about">{{i.property.username}}</p>
+                        <a class="video-title">({{i.category}}) / {{i.title}}</a>
+                        <p class="channel-about">{{i.view}} gezek görülen&nbsp;&#x2022;&nbsp;{{i.uploaded_time}}</p>
+                    </div>
+                </div>
+            </div>  
+        {% endfor %}
+    </div>
+{% endblock %}

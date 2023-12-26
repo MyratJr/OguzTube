@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}OguzTube{% endblock %}
+{% block content %}
+<div class="header">
+        <div class="left-section" style="margin-top:{{b1}}">
+            <a href="{% url 'index' %}"><img width="133px" src="{% static 'image/OguzTube2.png' %}"/></a>
+        </div>
+        {% if request.path == '/' or 'category' in request.path or 'video' in request.path %}
+        <form action={% url 'index' %} method="POST">
+        {% else %}
+        <form action={% url 'short' %} method="POST">
+        {% endif %}
+        {% csrf_token %}
+        <div class="center">
+            <div class="middle-head">
+                <input type="text" placeholder="Gözleg" class="search-box" name="gozle" style="width:40vw" />
+            </div>
+            <button class="search-button">
+                <img class="search-icon" src="{% static 'image/search.svg' %}" />
+                <div class="tooltips">Gözleg</div>
+            </button>
+        </div>
+        </form>
+        <div class="right-section">
+        <a href="http://{{ip}}:8000/admin/oguztube/user/{{request.user.id}}/change/" target="_blank">
+            <button class="upload-button">
+                <img class="upload-icon" src="{% static 'image/upload.svg' %}" />
+                <div class="tooltips">Wideo goş</div>
+            </button>
+            </a>
+            <a href="http://{{ip}}:8000/admin/oguztube/user/{{request.user.id}}/change/" target="_blank">
+            <button class="avtar-button">
+            {% if not user.is_authenticated %}
+                <img class="profile-icon" src="{% static 'image/27470334_7309681.jpg' %}" />
+            {% else %}
+                <img class="profile-icon" src="{{request.user.avatar.url}}" />
+            {% endif %}
+            </button>
+            </a>
+        </div>
+    </div>
+    <div class="sidebar">
+        <a href="{% url "index" %}" style="text-decoration:None">
+        <div class="home-icon">
+            <img class="home" src="{% static 'image/home.svg' %}" />
+            <span class="home-text">Baş sahypa</span>
+        </div>
+        </a>
+        <a href="{% url "short" %}" style="text-decoration:None">
+        <div class="shorts-icon" style="margin-top:{{a1}}">
+            <img class="home" src="{% static 'image/shorts.svg' %}" />
+            <span class="shorts-text">Gysga</span>
+        </div>
+        </a>
+        </div>
+        <div class="chipset-container">
+        {% if request.path == '/' or 'category' in request.path or 'video' in request.path %}
+        <a href="{% url 'category' 'Ähli' %}"><button class="chipsets">Ähli</button></a>
+        {% for i in categories %}
+            <a href="{% url 'category' i.title %}"><button {% if i.title == cat or i.title == 'Ähli' and cat is None %}class="chipset-active"{% else %}class="chipsets"{% endif %}>{{i.title}}</button></a>
+        {% endfor %}
+        {% else %}
+        <a href="{% url 'short_part' 'Ähli' %}"><button class="chipsets">Ähli</button></a>
+          {% for i in categories %}
+            <a href="{% url 'short_part' i.title %}"><button {% if i.title == cat or i.title == 'Ähli' and cat is None  %}class="chipset-active"{% else %}class="chipsets"{% endif %}>{{i.title}}</button></a>
+        {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

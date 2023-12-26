@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}OguzTube{% endblock %}
+{% block content %}
+    {% include 'header.html' %}
+        {% if videos|length == 0 %}
+    <div style="text-align:center">
+        <img src="{% static 'image/7887410_3793096.jpg' %}" width="400">
+    </div>
+        <h2 style="text-align:center">Bu kategoriýada gysga wideo tapylmady!!!</h2>
+    {% endif %}
+    <div class="video-contents_short">
+        {% for i in videos %}
+            <div {% if forloop.counter != 1 %}style="margin-top:100px" {% endif %}>
+                    <video id="myVideo" class="youtube-shorts-player" poster="{{i.video_image.url}}" loop>
+                        <source src="{{i.video.url}}" type="video/mp4"> 
+                    </video>
+                <div class="video-details" style="margin-top:-100px;position:absolute;color:white;margin-left:10px">
+                    <img class="channel-img" src="{{i.property.avatar.url}}">
+                    <div class="Video-desc">
+                        <p class="channel-about">{{i.property.username}}</p>
+                        <a class="video-title" style="color:white">{{i.title|truncatechars:50|safe}}</a>
+                        <p class="channel-about">{{i.category}}&nbsp;&#x2022;&nbsp;{{i.uploaded_time}}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    <script>
+    const videos = document.querySelectorAll('video');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+        const video = entry.target;
+        const rect = video.getBoundingClientRect();
+        const top = rect.top;
+        if (160 > top > -160) {
+            video.play();
+        }
+    } else {
+      entry.target.pause();
+    }
+  });
+},{threshold: 0.54});
+
+videos.forEach((video) => {
+  observer.observe(video);
+});
+    </script>
+    </div>
+{% endblock %}
